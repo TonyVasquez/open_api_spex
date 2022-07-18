@@ -194,14 +194,14 @@ defmodule OpenApiSpex.ObjectTest do
       assert cast(value: %{"foo" => "foo"}, schema: schema) == {:ok, %{"foo" => "foo"}}
     end
 
-    test "allow unrecognized fields when additionalProperties is nil" do
+    test "remove unrecognized fields when additionalProperties is nil" do
       schema = %Schema{
         type: :object,
         properties: %{},
         additionalProperties: nil
       }
 
-      assert cast(value: %{"foo" => "foo"}, schema: schema) == {:ok, %{"foo" => "foo"}}
+      assert cast(value: %{"foo" => "foo"}, schema: schema) == {:ok, %{}}
     end
 
     test "casts additional properties according to the additionalProperty schema" do
