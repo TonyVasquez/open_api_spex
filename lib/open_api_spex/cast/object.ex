@@ -150,6 +150,10 @@ defmodule OpenApiSpex.Cast.Object do
     end
   end
 
+  defp cast_additional_properties(%{schema: %{additionalProperties: nil}} = ctx, _original_value) do
+    {:ok, ctx}
+  end
+
   defp cast_additional_properties(%{schema: %{additionalProperties: ap}} = ctx, original_value) do
     original_value
     |> get_additional_properties(ctx)
@@ -182,7 +186,7 @@ defmodule OpenApiSpex.Cast.Object do
     end
   end
 
-  defp cast_additional_property(%{schema: ap} = ctx, output_ctx) when ap in [nil, true] do
+  defp cast_additional_property(%{schema: true} = ctx, output_ctx) do
     {:ok, %{output_ctx | value: Map.put(output_ctx.value, ctx.key, ctx.value)}}
   end
 
